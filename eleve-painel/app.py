@@ -45,5 +45,6 @@ if ministerio != "— Selecione —":
                 try:
                     salvar_registro(dados, data_hoje, "")
                     st.success(f"✅ Registro de **{nome}** ({ministerio}) enviado com sucesso!")
+                    if st.button("➕ Preencher outro ministério", use_container_width=True):st.reru()
                 except Exception as e:
                     st.error(f"❌ Erro ao salvar: {e}")
