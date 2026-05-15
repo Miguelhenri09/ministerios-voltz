@@ -10,13 +10,10 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive",
 ]
 
-
 def conectar_planilha():
     if "gcp_service_account" in st.secrets:
         creds = Credentials.from_service_account_info(
-            st.secrets["gcp_service_account"],
-            scopes=SCOPES
-        )
+            st.secrets["gcp_service_account"], scopes=SCOPES)
     else:
         from dotenv import load_dotenv
         load_dotenv()
@@ -24,31 +21,24 @@ def conectar_planilha():
         creds = Credentials.from_service_account_file(credentials_path, scopes=SCOPES)
 
     client = gspread.authorize(creds)
-    planilha = client.open_by_key(SPREADSHEET_ID)
-    aba = planilha.worksheet(SHEET_NAME)
-    return aba
-
+    return client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
 
 def garantir_cabecalhos(aba):
-    primeira_linha = aba.row_values(1)
-    if not primeira_linha:
+    if not aba.row_values(1):
         aba.append_row(CABECALHOS)
 
-
-def salvar_registro(dados: dict, data_culto: str, dia_semana: str) -> bool:
-    try:
-        aba = conectar_planilha()
-        garantir_cabecalhos(aba)
-
-        agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        linha = [agora, data_culto, dia_semana]
-
-        for cabecalho in CABECALHOS[3:]:
-            linha.append(dados.get(cabecalho, ""))
-
-        aba.append_row(linha, value_input_option="USER_ENTERED")
-        return True
-
-    except Exception as e:
-        print(f"Erro ao salvar no Sheets: {e}")
-        raise e
+def salvar_registro(dados: dict, data_culto: str, dia_semana: str):
+    aba = conectar_planilha()
+    garantir_cabecalhos(aba)
+    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    linha = [
+        agora,
+        dados.get("nome", ""),
+        dados.get("ministerio", ""),
+        dados.get("quantidade", 0),
+        dados.get("nomes", ""),
+        dados.get("dec_jesus", 0),
+        dados.get("dec_reconciliacao", 0),
+        dados.get("dec_batismo", 0),
+    ]
+    aba.append_row(linha, value_input_option="USER_ENTERED")
