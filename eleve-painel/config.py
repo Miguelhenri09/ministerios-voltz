@@ -27,8 +27,8 @@ CABECALHOS = [
     "nome",
     "ministerio",
     "quantidade",
-    "nomes",        # só Primeira vez
-    "dec_jesus",    # só Recomeço
-    "dec_reconciliacao",  # só Recomeço
-    "dec_batismo",        # só Recomeço
+    "dec_primeira_vez",
+    "dec_jesus",
+    "dec_reconciliacao",
+    "dec_batismo",
 ]

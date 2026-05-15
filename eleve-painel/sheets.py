@@ -36,7 +36,7 @@ def salvar_registro(dados: dict, data_culto: str, dia_semana: str):
         dados.get("nome", ""),
         dados.get("ministerio", ""),
         dados.get("quantidade", 0),
-        dados.get("nomes", ""),
+        dados.get("dec_primeira_vez", 0),
         dados.get("dec_jesus", 0),
         dados.get("dec_reconciliacao", 0),
         dados.get("dec_batismo", 0),

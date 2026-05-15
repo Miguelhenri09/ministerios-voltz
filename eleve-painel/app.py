@@ -18,13 +18,14 @@ ministerio = st.selectbox("🏛️ Ministério", ["— Selecione —"] + MINISTE
 
 if ministerio != "— Selecione —":
     st.divider()
-    dados = {"nome": nome, "ministerio": ministerio, "quantidade": 0, "nomes": "", "dec_jesus": 0, "dec_reconciliacao": 0, "dec_batismo": 0}
+    dados = {"nome": nome, "ministerio": ministerio, "quantidade": 0, "dec_primeira_vez": 0, "dec_jesus": 0, "dec_reconciliacao": 0, "dec_batismo": 0}
 
     if ministerio == "Primeira vez":
-        dados["quantidade"] = st.number_input("🥇 Quantidade de voluntários", min_value=0, step=1)
-        dados["nomes"] = st.text_input("📝 Decisões", min_value=0, step=1)
+        dados["quantidade"] = st.number_input("👥 Voluntários", min_value=0, step=1)
+        dados["dec_primeira_vez"] = st.number_input("🥇 Decisões — Primeira vez", min_value=0, step=1)
 
     elif ministerio == "Recomeço":
+        dados["quantidade"] = st.number_input("👥 Voluntários", min_value=0, step=1)
         st.markdown("**Decisões:**")
         dados["dec_jesus"] = st.number_input("✝️ Jesus", min_value=0, step=1)
         dados["dec_reconciliacao"] = st.number_input("👐🏻 Reconciliação", min_value=0, step=1)
