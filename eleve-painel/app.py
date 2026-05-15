@@ -21,8 +21,8 @@ if ministerio != "— Selecione —":
     dados = {"nome": nome, "ministerio": ministerio, "quantidade": 0, "nomes": "", "dec_jesus": 0, "dec_reconciliacao": 0, "dec_batismo": 0}
 
     if ministerio == "Primeira vez":
-        dados["quantidade"] = st.number_input("🥇 Quantidade de pessoas", min_value=0, step=1)
-        dados["nomes"] = st.text_input("📝 Nomes", placeholder="Ex: Ana, João, Maria...")
+        dados["quantidade"] = st.number_input("🥇 Quantidade de voluntários", min_value=0, step=1)
+        dados["nomes"] = st.text_input("📝 Decisões", min_value=0, step=1)
 
     elif ministerio == "Recomeço":
         st.markdown("**Decisões:**")
