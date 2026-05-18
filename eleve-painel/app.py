@@ -96,4 +96,4 @@ if ministerio != "— Selecione —":
                 except Exception as e:
                     st.error(f"❌ Erro ao salvar: {type(e).__name__} - {str(e)}")
                     # Isso vai forçar o erro completo a aparecer no log do Streamlit Cloud também!
-                raise e
+                    raise e
