@@ -13,7 +13,7 @@ st.markdown(f"### ✝️ {CELEBRACAO_NOME}")
 st.caption("Painel de registro · Igreja da Cidade")
 st.divider()
 
-nome = st.text_input("👤 Seu nome", placeholder="Ex: Ana Paula")
+nome = st.text_input("👤 Seu nome")
 ministerio = st.selectbox("🏛️ Ministério", ["— Selecione —"] + MINISTERIOS)
 
 if ministerio != "— Selecione —":
