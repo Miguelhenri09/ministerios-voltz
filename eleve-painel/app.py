@@ -9,12 +9,18 @@ st.set_page_config(
     layout="centered",
 )
 
+# --- TRATAMENTO DA CHAVE PRIVADA ---
 if "gcp_service_account" in st.secrets:
-    key = st.secrets["gcp_service_account"]["private_key"]
-    st.code(f"Primeiros 80 chars: {key[:80]}")
-    st.code(f"Tem \\\\n literal: {'\\\\n' in key}")
-    st.code(f"Tem \\n real: {chr(10) in key}")
-
+    # Se você precisar recriar as quebras de linha para a biblioteca do Google:
+    # Garante que o \n literal vire uma quebra de linha real de string do Python
+    orig_key = st.secrets["gcp_service_account"]["private_key"]
+    
+    # Se a chave veio com \n escrito (literal), a gente troca por enter real
+    if "\\n" in orig_key:
+        st.secrets["gcp_service_account"]["private_key"] = orig_key.replace("\\n", "\n")
+        
+    # --- Fim do tratamento ---
+    
 # Inicializa session_state
 if "enviado" not in st.session_state:
     st.session_state.enviado = False
