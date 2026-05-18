@@ -13,9 +13,18 @@ SCOPES = [
 
 def conectar_planilha():
     if "gcp_service_account" in st.secrets:
-        # Converte para dict normal e corrige as quebras de linha da private_key
-        info = json.loads(json.dumps(dict(st.secrets["gcp_service_account"])))
-        info["private_key"] = info["private_key"].replace("\\n", "\n")
+        info = {
+            "type": st.secrets["gcp_service_account"]["type"],
+            "project_id": st.secrets["gcp_service_account"]["project_id"],
+            "private_key_id": st.secrets["gcp_service_account"]["private_key_id"],
+            "private_key": st.secrets["gcp_service_account"]["private_key"].replace("\\n", "\n"),
+            "client_email": st.secrets["gcp_service_account"]["client_email"],
+            "client_id": st.secrets["gcp_service_account"]["client_id"],
+            "auth_uri": st.secrets["gcp_service_account"]["auth_uri"],
+            "token_uri": st.secrets["gcp_service_account"]["token_uri"],
+            "auth_provider_x509_cert_url": st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
+            "client_x509_cert_url": st.secrets["gcp_service_account"]["client_x509_cert_url"],
+        }
         creds = Credentials.from_service_account_info(info, scopes=SCOPES)
     else:
         credentials_path = os.getenv("GOOGLE_CREDENTIALS_PATH", "credentials/service_account.json")
@@ -23,7 +32,7 @@ def conectar_planilha():
 
     client = gspread.authorize(creds)
     return client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
-
+                                                        
 def garantir_cabecalhos(aba):
     if not aba.row_values(1):
         aba.append_row(CABECALHOS)

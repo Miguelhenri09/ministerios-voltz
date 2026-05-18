@@ -9,6 +9,12 @@ st.set_page_config(
     layout="centered",
 )
 
+if "gcp_service_account" in st.secrets:
+    key = st.secrets["gcp_service_account"]["private_key"]
+    st.code(f"Primeiros 80 chars: {key[:80]}")
+    st.code(f"Tem \\\\n literal: {'\\\\n' in key}")
+    st.code(f"Tem \\n real: {chr(10) in key}")
+
 # Inicializa session_state
 if "enviado" not in st.session_state:
     st.session_state.enviado = False
