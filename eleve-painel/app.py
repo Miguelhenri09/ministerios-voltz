@@ -20,7 +20,7 @@ if "gcp_service_account" in st.secrets:
         st.secrets["gcp_service_account"]["private_key"] = orig_key.replace("\\n", "\n")
         
     # --- Fim do tratamento ---
-    
+
 # Inicializa session_state
 if "enviado" not in st.session_state:
     st.session_state.enviado = False
@@ -94,4 +94,6 @@ if ministerio != "— Selecione —":
                     st.session_state.enviado = True
                     st.rerun()
                 except Exception as e:
-                    st.error(f"❌ Erro ao salvar: {e}")
+                    st.error(f"❌ Erro ao salvar: {type(e).__name__} - {str(e)}")
+                    # Isso vai forçar o erro completo a aparecer no log do Streamlit Cloud também!
+                raise e
