@@ -3,6 +3,20 @@ from datetime import date
 from sheets import salvar_registro
 from config import MINISTERIOS, CELEBRACAO_NOME
 
+st.html(
+    """
+    <style>
+    /* Esconde o botão Manage App e elementos de desenvolvimento no canto inferior direito */
+    footer {visibility: hidden;}
+    #MainMenu {visibility: hidden;}
+    div[data-testid="stDeploymentPopover"] {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    iframe[title="Manage app"] {display: none !important;}
+    div[class^="st-emotion-cache-"] > button {display: none !important;} /* Alvo para o popover do Cloud */
+    </style>
+    """
+)
+
 st.set_page_config(
     page_title="Painel Eleve · Igreja da Cidade",
     page_icon="✝️",

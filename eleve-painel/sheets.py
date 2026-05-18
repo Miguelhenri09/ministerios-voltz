@@ -2,6 +2,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 import os
+import json
 import streamlit as st
 from config import SPREADSHEET_ID, SHEET_NAME, CABECALHOS
 
@@ -12,19 +13,11 @@ SCOPES = [
 
 def conectar_planilha():
     if "gcp_service_account" in st.secrets:
-        # Normaliza a private_key independente do formato (\\n ou \n real)
-        raw_key = st.secrets["gcp_service_account"]["private_key"]
-        private_key = raw_key.replace("\r\n", "\n").replace("\r", "\n")
-        if "\\n" not in private_key and "\n" in private_key:
-            pass  # já está com quebras reais, ok
-        else:
-            private_key = private_key.replace("\\n", "\n")
-
         info = {
             "type": st.secrets["gcp_service_account"]["type"],
             "project_id": st.secrets["gcp_service_account"]["project_id"],
             "private_key_id": st.secrets["gcp_service_account"]["private_key_id"],
-            "private_key": private_key,
+            "private_key": st.secrets["gcp_service_account"]["private_key"].replace("\\n", "\n"),
             "client_email": st.secrets["gcp_service_account"]["client_email"],
             "client_id": st.secrets["gcp_service_account"]["client_id"],
             "auth_uri": st.secrets["gcp_service_account"]["auth_uri"],
@@ -39,7 +32,7 @@ def conectar_planilha():
 
     client = gspread.authorize(creds)
     return client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
-
+                                                        
 def garantir_cabecalhos(aba):
     if not aba.row_values(1):
         aba.append_row(CABECALHOS)
