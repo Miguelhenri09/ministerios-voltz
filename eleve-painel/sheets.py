@@ -16,8 +16,6 @@ def conectar_planilha():
         info["private_key"] = info["private_key"].replace("\\n", "\n")
         creds = Credentials.from_service_account_info(info, scopes=SCOPES)
     else:
-        from dotenv import load_dotenv
-        load_dotenv()
         credentials_path = os.getenv("GOOGLE_CREDENTIALS_PATH", "credentials/service_account.json")
         creds = Credentials.from_service_account_file(credentials_path, scopes=SCOPES)
 
