@@ -24,6 +24,7 @@ MINISTERIOS = [
 
 CABECALHOS = [
     "data_registro",
+    "data_culto",
     "nome",
     "ministerio",
     "quantidade",
